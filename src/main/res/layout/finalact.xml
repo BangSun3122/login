@@ -7,9 +7,10 @@
     <TextView
             android:text="登录成功"
             android:layout_width="match_parent"
-            android:layout_height="142dp" android:id="@+id/textView"/>
+            android:layout_height="142dp" android:id="@+id/textView" android:textSize="36sp" android:textStyle="bold"
+            android:textAllCaps="false"/>
     <Button
-            android:text="退出"
+            android:text="退出登录"
             android:layout_width="match_parent"
             android:layout_height="70dp" android:id="@+id/button"/>
 </LinearLayout>

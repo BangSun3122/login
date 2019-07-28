@@ -23,7 +23,6 @@ class LoginAct : AppCompatActivity() {
     var pw:String? = null
     var readpw:String? = null
     fun encode(pw: String): String {
-        val digest: MessageDigest?
         try {
             //获取md5加密对象
             val instance: MessageDigest = MessageDigest.getInstance("MD5")
@@ -68,7 +67,6 @@ class LoginAct : AppCompatActivity() {
         }
 
         LButton!!.setOnClickListener(View.OnClickListener {
-            //开始登录，获取用户名和密码
             UName = Usertext!!.text.toString().trim { it <= ' ' }
             pw = Keytext!!.text.toString().trim { it <= ' ' }
 
@@ -77,43 +75,35 @@ class LoginAct : AppCompatActivity() {
             if (TextUtils.isEmpty(UName)) {
                 Toast.makeText(this@LoginAct, "请输入用户名", Toast.LENGTH_SHORT).show()
                 return@OnClickListener
-                //密码为空
             } else if (TextUtils.isEmpty(pw)) {
                 Toast.makeText(this@LoginAct, "请输入密码", Toast.LENGTH_SHORT).show()
                 return@OnClickListener
-                // 判断，输入的密码加密后，是否与保存在SharedPreferences中一致
             } else if (encode(temp_pw) == readpw) {
-                //登录成功
                 Toast.makeText(this@LoginAct, "登录成功", Toast.LENGTH_SHORT).show()
                 saveLoginStatus(true, UName)
                 val data = Intent()
                 data.putExtra("isLogin", true)
                 setResult(Activity.RESULT_OK, data)
                 this@LoginAct.finish()
-                //跳转，登录成功的状态
                 startActivity(Intent(this@LoginAct, FinalAct::class.java))
                 return@OnClickListener
-                //用户名密码不匹配
             }else if (readpw != null && !TextUtils.isEmpty(readpw) &&encode(temp_pw) != readpw) {
                 Toast.makeText(this@LoginAct, "输入的用户名和密码不一致", Toast.LENGTH_SHORT).show()
                 return@OnClickListener
-            }//用户名不存在
+            }
             else {
                 Toast.makeText(this@LoginAct, "此用户名不存在", Toast.LENGTH_SHORT).show()
             }
         })
     }
-    //读取输入的用户名，找到与之匹配的密码并返回
     private fun readPsw(userName: String?): String? {
-        val sp = getSharedPreferences("loginInfo", MODE_PRIVATE)
+        val sp = getSharedPreferences("regiInfo", MODE_PRIVATE)
         return sp.getString(userName, "")
     }
-    //保存登陆状态
     private fun saveLoginStatus(status: Boolean, UName: String?) {
-        val sp = getSharedPreferences("loginInfo", MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putBoolean("isLogin", status)
-        //存入登录状态时的用户名
+        val gsp = getSharedPreferences("regiInfo", MODE_PRIVATE)
+        val editor = gsp.edit()
+        editor.putBoolean("is Login", status)
         editor.putString("loginUserName", UName)
         editor.apply()
     }
@@ -121,11 +111,8 @@ class LoginAct : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null) {
-            //是获取注册界面回传过来的用户名
-            // getExtra().getString("***");
-            val UName = data.getStringExtra("userName")
+            val UName = data.getStringExtra("Name")
             if (!TextUtils.isEmpty(UName)) {
-                //设置用户名到 input_user_text 控件
                 Usertext!!.setText(UName)
                 Usertext!!.setSelection(UName!!.length)
             }
