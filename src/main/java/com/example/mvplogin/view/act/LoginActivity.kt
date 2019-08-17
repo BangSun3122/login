@@ -25,54 +25,43 @@ class LoginActivity : baseactivity<loginContract.IView, loginContract.IPresenter
         super.onCreate(savedInstanceState)
         setContentView(R.layout.testlogin)
         button2.setOnClickListener(this)
+        button3.setOnClickListener(this)
+        button5.setOnClickListener(this)
     }
     override fun onClick(p0: View?) {
         var presenter = LoginPresenter(this@LoginActivity)
         when(p0?.id)
         {
-            R.id.button2 -> presenter.login(getUserName(),getPassword(),this)
+            R.id.button2 -> presenter.login(editText5.text.toString(),editText.text.toString(),this)
             R.id.button3 -> register()
             R.id.button5 -> change()
         }
     }
-    fun getUserName(): String {
-        return editText5!!.text.toString()
-    }
 
-    fun getPassword(): String {
-        return editText!!.text.toString()
-    }
-
-    fun showToast(msg: String) {
-        Toast.makeText(this@LoginActivity,msg,Toast.LENGTH_SHORT).show()
-    }
 
     fun gotoMainActivity() {
         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
     }
     fun onUserNameError() {
-        showToast("onUserNameError--->")
+        Toast.makeText(this@LoginActivity, "用户名不存在", Toast.LENGTH_SHORT).show()
     }
     fun onUserNameEmpty() {
-        showToast("onUserNameEmpty--->")
+        Toast.makeText(this@LoginActivity, "请输入用户名", Toast.LENGTH_SHORT).show()
     }
 
     fun onPasswordError() {
-        showToast("onPasswordError--->")
+        Toast.makeText(this@LoginActivity, "密码错误", Toast.LENGTH_SHORT).show()
     }
     fun onPasswordEmpty() {
-        showToast("onPasswordEmpty--->")
+        Toast.makeText(this@LoginActivity, "请输入密码", Toast.LENGTH_SHORT).show()
     }
 
     fun onSuccess() {
         this@LoginActivity.finish()
-        showToast("onSuccess--->")
+        Toast.makeText(this@LoginActivity, "登录成功", Toast.LENGTH_SHORT).show()
         gotoMainActivity()
     }
 
-    fun onError() {
-        showToast("onError--->")
-    }
     fun register(){
         this@LoginActivity.finish()
         val intent = Intent(this@LoginActivity, RegisterActivity::class.java)

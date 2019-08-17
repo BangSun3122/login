@@ -20,32 +20,30 @@ import java.security.NoSuchAlgorithmException
 
 @SuppressLint("Registered")
 class LoginPresenter (private var loginView:LoginActivity) : basepresenter<loginContract.IView, loginContract.IModel>(){
-//    var mView : ILoginView ?= null
-//    var mModel : ILoginModel ?= LoginModel()
     var readpw:String? = null
     fun login(userName: String, password: String, context: Context) {
-        readpw = readPsw(userName)
+        readpw = readPsw(userName,context)
         val temp_pw:String=password
         if (TextUtils.isEmpty(userName)) {
-            loginView.onUserNameEmpty()
+            onEmptyUser()
         }else if (TextUtils.isEmpty(password)) {
-            loginView.onPasswordEmpty()
+            onEmptyPw()
         } else if (encode(temp_pw) == readpw) {
             saveLoginStatus(true,userName,context)
             val data = Intent()
             data.putExtra("isLogin", true)
             setResult(Activity.RESULT_OK, data)
-            loginView.onSuccess()
+            onSuccess()
         }else if (readpw != null && !TextUtils.isEmpty(readpw) &&encode(temp_pw) != readpw) {
-            loginView.onPasswordError()
+            onPwError()
         }
         else {
-            loginView.onUserNameError()
+           onUnExistUser()
         }
 
     }
-    private fun readPsw(userName: String?): String? {
-        val sp = getSharedPreferences("regiInfo", AppCompatActivity.MODE_PRIVATE)
+    private fun readPsw(userName: String?,context: Context): String? {
+        val sp = context.getSharedPreferences("regiInfo", AppCompatActivity.MODE_PRIVATE)
         return sp.getString(userName, "")
     }
     private fun saveLoginStatus(status: Boolean, UName: String?,context: Context) {
@@ -54,6 +52,25 @@ class LoginPresenter (private var loginView:LoginActivity) : basepresenter<login
         editor.putBoolean("is Login", status)
         editor.putString("loginUserName", UName)
         editor.apply()
+    }
+    fun onEmptyUser() {
+        loginView.onUserNameEmpty()
+    }
+
+    fun onEmptyPw() {
+        loginView.onPasswordEmpty()
+    }
+
+    fun onPwError() {
+        loginView.onPasswordError()
+    }
+
+    fun onUnExistUser() {
+        loginView.onUserNameError()
+    }
+
+    fun onSuccess() {
+        loginView.onSuccess()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
