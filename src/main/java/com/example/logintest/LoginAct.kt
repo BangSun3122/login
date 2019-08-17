@@ -17,6 +17,7 @@ class LoginAct : AppCompatActivity() {
 
     var RButton: Button? = null//注册
     var LButton: Button? = null//登录
+    var CButton: Button? = null
     var Usertext: EditText? = null
     var Keytext: EditText? = null
     var UName:String? = null
@@ -57,12 +58,17 @@ class LoginAct : AppCompatActivity() {
     private fun init() {
         LButton = findViewById(R.id.button2)
         RButton = findViewById(R.id.button3)
+        CButton = findViewById(R.id.button5)
         Usertext = findViewById(R.id.editText5)
         Keytext = findViewById(R.id.editText)
 
 
         RButton!!.setOnClickListener{
             val intent = Intent(this@LoginAct, RegisterAct::class.java)
+            startActivity(intent)
+        }
+        CButton!!.setOnClickListener{
+            val intent = Intent(this@LoginAct, ChangePasswordAct::class.java)
             startActivity(intent)
         }
 

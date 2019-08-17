@@ -117,6 +117,10 @@ class RegisterAct : AppCompatActivity() {
                     Toast.makeText(this@RegisterAct, "请输入密码", Toast.LENGTH_SHORT).show()
                     return@OnClickListener
                 }
+                !pwstyle.matches(pw.toString()) -> {
+                    Toast.makeText(this@RegisterAct, "密码格式错误", Toast.LENGTH_SHORT).show()
+                    return@OnClickListener
+                }
                 TextUtils.isEmpty(pw2) -> {
                     Toast.makeText(this@RegisterAct, "请再次输入密码", Toast.LENGTH_SHORT).show()
                     return@OnClickListener
@@ -133,10 +137,7 @@ class RegisterAct : AppCompatActivity() {
                     Toast.makeText(this@RegisterAct, "邮箱格式不正确", Toast.LENGTH_SHORT).show()
                     return@OnClickListener
                 }
-                !pwstyle.matches(pw.toString()) -> {
-                    Toast.makeText(this@RegisterAct, "密码格式错误", Toast.LENGTH_SHORT).show()
-                    return@OnClickListener
-                }
+
                 isExistUName(UName) -> {
                     Toast.makeText(this@RegisterAct, "此账户名已经存在", Toast.LENGTH_SHORT).show()
                     return@OnClickListener
