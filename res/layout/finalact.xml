@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:text="登录成功"
+            android:layout_width="match_parent"
+            android:layout_height="142dp" android:id="@+id/textView" android:textSize="36sp" android:textStyle="bold"
+            android:textAllCaps="false"/>
+    <Button
+            android:text="退出登录"
+            android:layout_width="match_parent"
+            android:layout_height="70dp" android:id="@+id/button"/>
+</LinearLayout>
